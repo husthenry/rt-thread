@@ -1,6 +1,41 @@
 #ifndef LIBC_STAT_H__
 #define LIBC_STAT_H__
 
+#include <rtconfig.h>
+
+#if defined(RT_USING_NEWLIB)
+/* use header file of newlib */
+#include <sys/stat.h>
+
+#elif defined(_WIN32)
+#include <sys/stat.h>
+
+#define S_IRWXU              00700
+#define S_IRUSR              00400
+#define S_IWUSR              00200
+#define S_IXUSR              00100
+
+#define S_IRWXG              00070
+#define S_IRGRP              00040
+#define S_IWGRP              00020
+#define S_IXGRP              00010
+
+#define S_IRWXO              00007
+#define S_IROTH              00004
+#define S_IWOTH              00002
+#define S_IXOTH              00001
+
+#define S_IFSOCK             0140000
+#define S_IFLNK              0120000
+#define S_IFBLK              0060000
+#define S_IFIFO              0010000
+#define S_ISUID              0004000
+#define S_ISGID              0002000
+#define S_ISVTX              0001000
+
+#define S_ISDIR(m)           (((m) & S_IFMT) == S_IFDIR)
+
+#else
 #define S_IFMT               00170000
 #define S_IFSOCK             0140000
 #define S_IFLNK              0120000
@@ -36,5 +71,19 @@
 #define S_IWOTH              00002
 #define S_IXOTH              00001
 
+/* stat structure */
+#include <stdint.h>
+#include <time.h>
+
+struct stat
+{
+    struct rt_device* st_dev;
+    uint16_t st_mode;
+    uint32_t st_size;
+    time_t   st_mtime;
+    uint32_t st_blksize;
+};
+
 #endif
 
+#endif

@@ -17,14 +17,14 @@
 #include <rtthread.h>
 #include <finsh.h>
 
-#ifdef RT_USING_GUIENGINE
+#ifdef PKG_USING_GUIENGINE
 #include "rtgui_demo.h"
 #include <rtgui/driver.h>
 #endif
 
 #ifdef RT_USING_DFS
 /* dfs init */
-#include <dfs_init.h>
+#include <dfs.h>
 /* dfs filesystem:ELM filesystem init */
 #include <dfs_elm.h>
 /* dfs Filesystem APIs */
@@ -41,7 +41,7 @@ void rt_init_thread_entry(void* parameter)
     rt_components_init();
 #endif
     
-#ifdef RT_USING_GUIENGINE
+#ifdef PKG_USING_GUIENGINE
 	{
 		rt_device_t device;
 

@@ -233,7 +233,7 @@ static void finsh_wait_auth(void)
     rt_size_t cur_pos = 0;
     /* password not set */
     if (rt_strlen(finsh_get_password()) == 0) return;
-    
+
     while (1)
     {
         rt_kprintf("Password for login: ");
@@ -372,7 +372,7 @@ static void shell_push_history(struct finsh_shell *shell)
         if (shell->history_count >= FINSH_HISTORY_LINES)
         {
             /* if current cmd is same as last cmd, don't push */
-            if (memcmp(&shell->cmd_history[FINSH_HISTORY_LINES - 1], shell->line, shell->line_position))
+            if (memcmp(&shell->cmd_history[FINSH_HISTORY_LINES - 1], shell->line, FINSH_CMD_SIZE))
             {
                 /* move history */
                 int index;
@@ -391,7 +391,7 @@ static void shell_push_history(struct finsh_shell *shell)
         else
         {
             /* if current cmd is same as last cmd, don't push */
-            if (shell->history_count == 0 || memcmp(&shell->cmd_history[shell->history_count - 1], shell->line, shell->line_position))
+            if (shell->history_count == 0 || memcmp(&shell->cmd_history[shell->history_count - 1], shell->line, FINSH_CMD_SIZE))
             {
                 shell->current_history = shell->history_count;
                 memset(&shell->cmd_history[shell->history_count][0], 0, FINSH_CMD_SIZE);
@@ -541,8 +541,8 @@ void finsh_thread_entry(void *parameter)
             }
         }
 
-        /* handle CR key */
-        if (ch == '\0') continue;
+        /* received null or error */
+        if (ch == '\0' || ch == 0xFF) continue;
         /* handle tab key */
         else if (ch == '\t')
         {
@@ -776,7 +776,7 @@ int finsh_system_init(void)
 
     rt_sem_init(&(shell->rx_sem), "shrx", 0, 0);
     result = rt_thread_init(&finsh_thread,
-                            "tshell",
+                            FINSH_THREAD_NAME,
                             finsh_thread_entry, RT_NULL,
                             &finsh_thread_stack[0], sizeof(finsh_thread_stack),
                             FINSH_THREAD_PRIORITY, 10);

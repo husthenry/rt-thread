@@ -179,21 +179,16 @@
 #define RT_LWIP_ETHTHREAD_MBOX_SIZE	8
 // <integer name="RT_LWIP_ETHTHREAD_STACKSIZE" description="the stack size of ethnetif thread" default="512" />
 #define RT_LWIP_ETHTHREAD_STACKSIZE	512
-// <ipaddr name="RT_LWIP_IPADDR" description="IP address of device" default="192.168.1.30" />
-#define RT_LWIP_IPADDR0 192
-#define RT_LWIP_IPADDR1 168
-#define RT_LWIP_IPADDR2 1
-#define RT_LWIP_IPADDR3 254
-// <ipaddr name="RT_LWIP_GWADDR" description="Gateway address of device" default="192.168.1.1" />
-#define RT_LWIP_GWADDR0 192
-#define RT_LWIP_GWADDR1 168
-#define RT_LWIP_GWADDR2 1
-#define RT_LWIP_GWADDR3 3
-// <ipaddr name="RT_LWIP_MSKADDR" description="Mask address of device" default="255.255.255.0" />
-#define RT_LWIP_MSKADDR0 255
-#define RT_LWIP_MSKADDR1 255
-#define RT_LWIP_MSKADDR2 255
-#define RT_LWIP_MSKADDR3 0
+
+/* ip address of target */
+#define RT_LWIP_IPADDR "192.168.1.254"
+
+/* gateway address of target */
+#define RT_LWIP_GWADDR  "192.168.1.1"
+
+/* mask address of target */
+#define RT_LWIP_MSKADDR  "255.255.255.0"
+
 // </section>
 
 // <section name="RT_USING_MODULE" description="Application module" default="true" >
@@ -231,6 +226,17 @@
 // <bool name="RTGUI_IMAGE_BMP" description="Using bmp image in RTGUI" default="true" />
 #define RTGUI_IMAGE_BMP
 // </section>
+
+#define RT_USING_SPI
+#define RT_USING_SPI0
+#define RT_USING_SPI1
+
+#define RT_USING_I2C
+#define RT_USING_I2C_BITOPS
+
+
+#define RT_USING_PIN
+
 
 // </RDTConfigurator>
 
